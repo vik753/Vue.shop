@@ -63,7 +63,7 @@
 			<div class="pagination">
 				<ul class="pagination-menu">
 					<li class="pagination__item"
-					v-for="page in pages"
+					v-for="page in totalPages"
 					v-on:click="currentPage = page"
 					v-bind:class="{'currentPageTheme' : currentPage === page}"
 					>{{page}}</li>

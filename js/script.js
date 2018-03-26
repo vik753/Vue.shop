@@ -10,7 +10,6 @@ const app = new Vue({
     goodsPerPages: 5,
     currentPage: 1,
     totalPages: 0,
-    pages: [],
   },
   computed: {
     getSumCaart() {
@@ -22,7 +21,7 @@ const app = new Vue({
     },
     getProducts() {
       let products = [];
-      let pages = [];
+      let pages =[];
       let filteredCategories = parseInt(this.filteredCategories);
       let filteredPrice = parseInt(this.filteredPrice);
 
@@ -38,21 +37,7 @@ const app = new Vue({
         products = products.slice(from, to);
 
         //paginations
-        pages.push(this.currentPage);
-        if (this.currentPage > 1) {
-          pages.push(1);
-        }
-        if (this.currentPage != this.totalPages) {
-          pages.push(this.totalPages);
-        }
-
-        if (this.currentPage > 1 && !pages.includes(this.currentPage - 1)) {
-          pages.push(this.currentPage - 1);
-        }
-        if (this.currentPage < this.totalPages && !pages.includes(this.currentPage + 1)) {
-          pages.push(this.currentPage + 1);
-        }
-        this.pages = pages.sort((a, b) => a - b);
+        
       }
 
       return products;
