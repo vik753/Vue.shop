@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<!--	myStyles   -->
+	<title>title</title>
+</head>
+
+<body>
+	<div id="app" class="container-main">
+		<header class="header">
+			<div class="container-filters">
+				<span class="container-filters__cat">
+					<label for="cat">Категория:</label>
+					<select name="cat" id="cat" class="cat" v-model="filteredCategories">
+						<option value="0">Все</option>
+						<option v-for="cat in categories" v-bind:value="cat.id">{{cat.title}}</option>
+					</select>
+				</span>
+				<span class="container-filters__price">
+					<label for="">Цена, до:</label>
+					<input type="number" min="0" step="5" style="width:60px" v-model="filteredPrice">
+					грн.
+				</span>
+
+			</div>
+			<div class="conteiner-showCart">
+				<span class="your-curt">Ваша корзина:
+					<span v-if="getSumCaart > 0"> {{getSumCaart}} грн.</span>
+				</span>
+				<i class="ion-ios-cart-outline" v-if="getSumCaart == 0"></i>
+				<i class="ion-ios-cart" v-if="getSumCaart > 0"></i>
+				<i class="ion-toggle" v-if="!showCart" v-on:click="showCart = !showCart"></i>
+				<i class="ion-toggle-filled" v-if="showCart" v-on:click="showCart = !showCart"></i>
+			</div>
+
+			<ol class="shop-cart-title" v-if="showCart">В корзине:
+				<li v-for="order in shopCart" class="shop-cart__order">
+					<span classs="shop-cart__order-title">{{order.title}}</span>
+					<span classs="shop-cart__order-qty">
+						<i class="ion-ios-minus-outline" v-on:click="addQtyinCart(order)"></i>
+						Кол-во: {{order.qty}}
+						<i class="ion-ios-plus-outline" v-on:click="++order.qty"></i>
+					</span>
+					<span classs="shop-cart__order-total">
+						<i class="ion-ios-close shop-cart__order-del" v-on:click="delDish(order)"></i>
+						<b>Сумма: {{(parseFloat(order.price) * parseFloat(order.qty)).toFixed(2)}} грн.</b>
+					</span>
+				</li>
+				<p class="shop-cart__order-sum">ИТОГО: {{getSumCaart}} грн.</p>
+			</ol>
+		</header>
+
+		<main class="main">
+			<div class="container-goods">
+				<div v-for="dish in getProducts" class="container-dish">
+					<div class="container-title">
+						<h3 class="dish-title">{{dish.title}}</h3>
+					</div>
+					<div class="container-img">
+						<img class="img-fluid" v-bind:src="'img/' + dish.im" alt="dish img">
+					</div>
+					<div class="container-description">
+						<span class="price-text">
+							{{(dish.price).toFixed(2)}} грн.
+						</span>
+						<span>
+							<input class="qty" :ref="'qty' + dish.id" type="number" min="1" value="1">
+							<label for="qty"> Кол-во</label>
+						</span>
+						<a v-on:click.prevent="addDish(dish)" href="#" class="btn-order-dish">Заказать</a>
+					</div>
+				</div>
+			</div>
+		</main>
+
+	</div>
+	<!-- /.container-main -->
+
+	<!--======script-->
+	<!-- development version, includes helpful console warnings -->
+	<script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+	<script src="js/data.js" /></script>
+	<script src="js/script.js"></script>
+	<!--myScript-->
+</body>
+
+</html>
