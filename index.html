@@ -23,10 +23,16 @@
 				</span>
 				<span class="container-filters__price">
 					<label for="">Цена, до:</label>
-					<input type="number" min="0" step="5" style="width:60px" v-model="filteredPrice">
+					<input type="number" min="0" step="5" style="width:60px; padding: 0 0.2rem" v-model="filteredPrice">
 					грн.
 				</span>
-
+				<span class="container-filters__perPage">
+					<label for="perPage">Показывать на странице:</label>
+					<input id="perPage" type="number" min="5" step="5" style="width:60px; padding: 0 0.2rem"
+					v-model="goodsPerPages"
+					v-on:change="currentPage >  totalPages ? currentPage = 1 : currentPage">
+					блюд
+				</span>
 			</div>
 			<div class="conteiner-showCart">
 				<span class="your-curt">Ваша корзина:
@@ -53,6 +59,16 @@
 				</li>
 				<p class="shop-cart__order-sum">ИТОГО: {{getSumCaart}} грн.</p>
 			</ol>
+
+			<div class="pagination">
+				<ul class="pagination-menu">
+					<li class="pagination__item"
+					v-for="page in pages"
+					v-on:click="currentPage = page"
+					v-bind:class="{'currentPageTheme' : currentPage === page}"
+					>{{page}}</li>
+				</ul>
+			</div>
 		</header>
 
 		<main class="main">

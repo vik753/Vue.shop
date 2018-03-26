@@ -31,6 +31,7 @@ html {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  font-size: 0.8rem;
 }
 
 .conteiner-showCart {
@@ -46,6 +47,10 @@ html {
 }
 
 .container-filters__price {
+  padding-left: 1rem;
+}
+
+.container-filters__perPage {
   padding-left: 1rem;
 }
 
@@ -146,6 +151,29 @@ html {
   font-weight: 600;
   color: #fff;
   background: rgba(0, 185, 142, 0.614);
+}
+
+.pagination-menu {
+  list-style-type: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.pagination__item {
+  display: inline-block;
+  margin-right: 0.2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  padding: 0.5rem;
+  cursor: pointer;
+  -ms-flex-item-align: center;
+      align-self: center;
+}
+
+.currentPageTheme {
+  background: rgba(0, 185, 142, 0.614);
+  color: #e0e0e0;
 }
 
 .container-goods {

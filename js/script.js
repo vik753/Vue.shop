@@ -3,10 +3,14 @@ const app = new Vue({
   data: {
     products: defaultData.products,
     categories: defaultData.cats,
-    filteredCategories: null,
+    filteredCategories: 0,
     filteredPrice: null,
     shopCart: [],
     showCart: false,
+    goodsPerPages: 5,
+    currentPage: 1,
+    totalPages: 0,
+    pages: [],
   },
   computed: {
     getSumCaart() {
@@ -18,13 +22,38 @@ const app = new Vue({
     },
     getProducts() {
       let products = [];
+      let pages = [];
       let filteredCategories = parseInt(this.filteredCategories);
       let filteredPrice = parseInt(this.filteredPrice);
 
       products = this.products.filter(dish => {
-          return (!filteredCategories || dish.cid === filteredCategories) &&
+        return (!filteredCategories || dish.cid === filteredCategories) &&
           (!filteredPrice || dish.price <= filteredPrice);
       });
+
+      if ((products.length > 0) && (this.goodsPerPages > 0)) {
+        this.totalPages = Math.ceil(products.length / this.goodsPerPages);
+        let from = (this.currentPage - 1) * this.goodsPerPages;
+        let to = (from + this.goodsPerPages) > products.length ? products.length : (from + this.goodsPerPages);
+        products = products.slice(from, to);
+
+        //paginations
+        pages.push(this.currentPage);
+        if (this.currentPage > 1) {
+          pages.push(1);
+        }
+        if (this.currentPage != this.totalPages) {
+          pages.push(this.totalPages);
+        }
+
+        if (this.currentPage > 1 && !pages.includes(this.currentPage - 1)) {
+          pages.push(this.currentPage - 1);
+        }
+        if (this.currentPage < this.totalPages && !pages.includes(this.currentPage + 1)) {
+          pages.push(this.currentPage + 1);
+        }
+        this.pages = pages.sort((a, b) => a - b);
+      }
 
       return products;
     }
